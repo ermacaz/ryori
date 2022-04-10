@@ -6,7 +6,11 @@ class Recipe < ApplicationRecord
   accepts_nested_attributes_for :primary_image, :allow_destroy => true
   accepts_nested_attributes_for :recipe_ingredients, :allow_destroy => true
   def as_json(options = nil)
-    ActiveStorage::Current.host = 'http://localhost:3000'
+    if Rails.env == 'production'
+      ActiveStorage::Current.host = 'https://ryori.ermacaz.com'
+    else
+      ActiveStorage::Current.host = 'http://localhost:3000'
+    end
     {:id=>self.id,
      :name=>self.name,
      :image_url=>self.primary_image&.url,
