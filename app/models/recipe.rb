@@ -11,6 +11,7 @@ class Recipe < ApplicationRecord
      :name=>self.name,
      :image_url=>self.primary_image&.url,
      :instructions=>self.instructions,
+     :notes=>self.notes,
      :service_size=>self.serving_size,
      :serving_size_unit=>self.serving_size_unit,
      :ingredients=>self.recipe_ingredients}

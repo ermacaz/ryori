@@ -1,15 +1,16 @@
 import React from "react";
 import { Form } from "react-bootstrap";
-import IngredientEntry from "./IngredientEntry";
 import Button from 'react-bootstrap/Button'
 import { ROOT_URL } from "../constants/globals";
 import Modal from 'react-bootstrap/Modal'
 import RecipeForm from "./RecipeForm";
+import useAuthFetch from "../helpers/useAuthFetch";
 
 function AddRecipeDialog({setShowNewRecipeDialog, setRecipes}) {
   const [recipe, setRecipe] = React.useState({ingredients: []})
   const [primaryImage, setPrimaryImage] = React.useState(null)
-
+  const authFetch = useAuthFetch();
+  
   const createRecipe = () => {
     const formData = new FormData();
     const formRecipe = {
@@ -29,18 +30,9 @@ function AddRecipeDialog({setShowNewRecipeDialog, setRecipes}) {
     if (primaryImage) {
       formData.append('primary_image', primaryImage)
     }
-    fetch(ROOT_URL + '/recipes', {
-      method: 'POST',
-      body: formData,
-    }).then((response) => {
-      if (response.ok) {
-        response.json() 
-        handleClose({reloadRecipes:true})
-      }
-    })
+    authFetch.post(`${ROOT_URL}/recipes`, formData)
     .then((json) => {
-      console.log(json)
-      
+      handleClose({reloadRecipes:true})
     })
     .catch((error) => console.log(error))
   }

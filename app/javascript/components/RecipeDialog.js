@@ -7,18 +7,16 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { ROOT_URL } from "../constants/globals";
 import FoodImage from '../images/food.png'
+import useAuthFetch from "../helpers/useAuthFetch";
 
 function RecipeDialog({recipe, setRecipeShown, setShowEditRecipeDialog}) {
   const handleClose = () => setRecipeShown(0);
+  const authFetch = useAuthFetch();
   
   const handleDeleteRecipe = () => {
-    fetch(ROOT_URL + '/recipes/'+recipe.id, {
-      method: 'DELETE',
-    }).then((response) => {
-      if (!response.ok) {
-        console.log(response)
-      } else {
-      } 
+    authFetch.delete(`${ROOT_URL}/recipes/${recipe.id}`)
+      .then((response) => {
+      setRecipeShown(false)
     }).catch((e) =>
       console.log(e)
     )

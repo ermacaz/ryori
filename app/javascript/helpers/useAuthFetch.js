@@ -4,6 +4,7 @@ const useAuthFetch = () => {
     get: request('GET'),
     post: request('POST'),
     put: request('PUT'),
+    patch: request('PATCH'),
     delete: request('DELETE')
   };
   
@@ -14,7 +15,7 @@ const useAuthFetch = () => {
         headers: authHeader(url)
       };
       if (body) {
-        requestOptions.body = JSON.stringify(body);
+        requestOptions.body = body;
       }
       return fetch(url, requestOptions).then(handleResponse);
     }
@@ -24,6 +25,7 @@ const useAuthFetch = () => {
     // return auth header with jwt if user is logged in and request is to the api url
     let apiKey = document.cookie.split('; ').filter((x) => {return x.match(/^apiKey/)})[0]
     if (apiKey) {
+      apiKey = apiKey.replace("apiKey=","")
       apiKey = apiKey.replace("apiKey=","")
     } else {
       apiKey = ''
@@ -40,12 +42,9 @@ const useAuthFetch = () => {
       const data = text && JSON.parse(text);
       
       if (!response.ok) {
-        console.log(response.status)
         const unauth = [401, 403].includes(response.status)
         if (unauth) {
           document.cookie = 'apiKey=;';
-          console.log('unauth');
-          console.log(document.cookie)
         }
         const error = (data && data.message) || response.statusText;
         return Promise.reject(error);

@@ -42,7 +42,7 @@ class RecipesController < ApplicationController
   def update
     rp = JSON.parse(params[:recipe])
     if params[:primary_image].present?
-      @recipe.primary_image.primary = false
+      @recipe.primary_image.primary = false if @recipe.primary_image
       @recipe.images.build(:primary=>true, :file=>params[:primary_image])
     end
     if @recipe.update(rp)
@@ -55,6 +55,7 @@ class RecipesController < ApplicationController
   # DELETE /recipes/1
   def destroy
     @recipe.destroy
+    render_json_response(message: 'Recipe deleted')
   end
 
   private

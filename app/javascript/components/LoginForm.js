@@ -35,7 +35,6 @@ function LoginForm({setAuthorized}) {
       }).then((json) => {
         console.log(json)
         if (json.success) {
-          console.log('successfull')
           document.cookie = ("apiKey=" + json.data.api_key + ';')
           setAuthorized(true)
         } else {

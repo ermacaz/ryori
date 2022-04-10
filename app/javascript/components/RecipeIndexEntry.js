@@ -9,7 +9,7 @@ function RecipeIndexEntry({recipe, setRecipeShown}) {
   }
 
   const renderRecipeImage = () => {
-    if (recipe.imageUrl) {
+    if (recipe.image_url) {
       return (
         <img alt='primaryImage' style={{maxHeight: '250px', maxWidth: '350px', margin: 'auto', display: 'block'}} src={recipe.image_url}/>
       )

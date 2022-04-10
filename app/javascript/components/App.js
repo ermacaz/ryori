@@ -10,7 +10,6 @@ function App() {
   
   const bodyRender = () => {
     const apiKey = document.cookie.split('; ').filter((x) => {return x.match(/^apiKey/)})[0]
-    console.log(apiKey)
     if (apiKey && !authorized) {
       setAuthorized(true)
     }

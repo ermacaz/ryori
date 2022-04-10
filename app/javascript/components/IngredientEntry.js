@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Badge from 'react-bootstrap/Badge'
+import useAuthFetch from "../helpers/useAuthFetch";
 
 
 class IngredientEntry extends React.Component {
@@ -40,20 +41,16 @@ class IngredientEntry extends React.Component {
     this.ingredientInput = null;
     this.quantityInput = null;
     this.unitOfMeasureInput = null;
+    this.authFetch = useAuthFetch();
   }
 
   getAutoCompleteIngredientEntries = (term) => {
     clearTimeout(this.ingredientACTimer)
     this.ingredientACTimer = setTimeout(() => {
-      fetch(ROOT_URL + '/ingredients?' + new URLSearchParams({
+      this.authFetch.get(`${ROOT_URL}/ingredients?` + new URLSearchParams({
         search: term
       }))
-      .then(response => {
-        if (response.ok) {
-          return response.json()
-        }
-        throw response;
-      }).then(data => {
+      .then(data => {
         this.setState({autocompleteIngredientItems: data})
       }).catch(error => {
         console.log(error)  
@@ -65,25 +62,21 @@ class IngredientEntry extends React.Component {
   getAutoCompleteUnitEntries = (term) => {
     clearTimeout(this.unitACTimer)
     this.unitACTimer = setTimeout(() => {
-      fetch(ROOT_URL + '/unit_of_measures?' + new URLSearchParams({
+      this.authFetch.get(`${ROOT_URL}/unit_of_measures?` + new URLSearchParams({
         search: term
-      })).then((response) => {
-        if (response.ok) {
-          return response.json()
-        }
-      }).then((data) => {
-        this.setState({autocompleteUnitItems: data})
-      }).catch(error => {
-        console.log(error)
-      }).finally(() => {
-      })
+      })).then((data) => {
+          this.setState({autocompleteUnitItems: data})
+        }).catch(error => {
+          console.log(error)
+        }).finally(() => {
+        })
     }, 250);
   }
 
   validateForm = () => {
     clearTimeout(this.timer);
     this.timer = setTimeout(() => {
-      if (this.state.ingredientValue != '' && this.state.quantityValue != '') {
+      if (this.state.ingredientValue !== '' && this.state.quantityValue !== '') {
         this.setState({ingredientValid: true})
       } else {
         this.setState({ingredientValid: false})
@@ -110,13 +103,9 @@ class IngredientEntry extends React.Component {
       unit_of_measure: this.state.unitValue
     }
     let ingredientSet = JSON.parse(JSON.stringify(this.state.addedIngredients))
-    fetch(ROOT_URL + '/ingredients/get_ingredient_and_uom?' + new URLSearchParams({
+    this.authFetch.get(`${ROOT_URL}/ingredients/get_ingredient_and_uom?` + new URLSearchParams({
       ingredient_name: ingredient.name, unit_of_measure: ingredient.unit_of_measure
-    })).then((response) => {
-      if (response.ok) {
-        return response.json()
-      }
-    }).then((data) => {
+    })).then((data) => {
       ingredient.ingredient_id = data.ingredient_id
       ingredient.unit_of_measure_id = data.unit_of_measure_id
       ingredientSet.push(ingredient)
@@ -187,8 +176,7 @@ class IngredientEntry extends React.Component {
           <Card bg={'dark'} border={'secondary'} body>
             <div>
               {chunks.map((ingredients,i) => {
-                return
-                (
+                return (
                   <Row key={'ingredient_chunk_row_'+i}>
                     <Col xs={4}>
                       {ingredients.map((ingredient) => {

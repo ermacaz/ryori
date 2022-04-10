@@ -4,11 +4,13 @@ import { ROOT_URL } from "../constants/globals";
 import Modal from 'react-bootstrap/Modal'
 import { Form } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
+import useAuthFetch from "../helpers/useAuthFetch";
 
 function EditRecipeDialog({recipe, recipes, setShowEditRecipeDialog, setRecipes}) {
   const [localRecipe, setLocalRecipe] = React.useState(JSON.parse(JSON.stringify(recipe)))
   const [primaryImage, setPrimaryImage] = React.useState(null)
-
+  const authFetch = useAuthFetch();
+  
   const updateRecipe = () => {
     const formData = new FormData();
     const formRecipe = {
@@ -34,14 +36,10 @@ function EditRecipeDialog({recipe, recipes, setShowEditRecipeDialog, setRecipes}
     if (primaryImage) {
       formData.append('primary_image', primaryImage)
     }
-    fetch(ROOT_URL + '/recipes/'+recipe.id, {
-      method: 'PATCH',
-      body: formData,
-    }).then((response) => response.json())
-    .then((json) => {
-      console.log(json)
-      setRecipes([json].concat(recipes))
-      setShowEditRecipeDialog({show: false, recipe: null});
+    authFetch.patch(`${ROOT_URL}/recipes/${recipe.id}`, formData)
+      .then((json) => {
+        setRecipes([json].concat(recipes))
+        setShowEditRecipeDialog({show: false, recipe: null});
     })
     .catch((error) => console.log(error))
   }
