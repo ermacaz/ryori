@@ -5,32 +5,52 @@ import AddRecipeButton from "./AddRecipeButton";
 import AddRecipeDialog from './AddRecipeDialog'
 import {ROOT_URL} from '../constants/globals'
 import EditRecipeDialog from "./EditRecipeDialog";
-function RecipeArea() {
+import useAuthFetch from '../helpers/useAuthFetch'
+
+function RecipeArea({setAuthorized}) {
   const [recipes, setRecipes] = React.useState([])
   const [recipeShown, setRecipeShown] = React.useState(0)
   const [showNewRecipeDialog, setShowNewRecipeDialog] = React.useState(false);
   const [showEditRecipeDialog, setShowEditRecipeDialog] = React.useState({show: false, recipe: recipe});
   const [loading, setLoading] = React.useState(true);
+  const authFetch = useAuthFetch();
   const handleAddRecipeClick = (event) => {
     event.preventDefault();
     setShowNewRecipeDialog(true)
   }
 
   const getRecipeData = () => {
-    fetch(ROOT_URL + '/recipes')
-      .then(response => {
-        if (response.ok) {
-          return response.json()
-        }
-        throw response;
-      }).then(data => {
-        setRecipes(data);
-      }).catch(error => {
-        console.log(error)  
+    const apiKey = document.cookie.split('; ').filter((x) => {return x.match(/^apiKey/)})[0]
+    if (apiKey) {
+      authFetch.get(`${ROOT_URL}/recipes`)
+        .then((json) => {
+          setRecipes((json))
+        }).catch((error) => {
+          console.log(error)
+      }).finally(() => {
+        setLoading(false)
       })
-      .finally(() => {
-        setLoading(false);
-      })
+      // fetch(ROOT_URL + '/recipes', {
+      //   headers: {
+      //     Authorization: apiKey.replace("apiKey=","")
+      //   }
+      // }).then(response => {
+      //     if (response.ok) {
+      //       return response.json()
+      //     }
+      //     throw response;
+      //   }).then(data => {
+      //   setRecipes(data);
+      // }).catch(error => {
+      //   console.log(error)
+      // })
+      //   .finally(() => {
+      //     setLoading(false);
+      //   })
+    } else {
+      document.cookies=''
+      setAuthorized(false);
+    }
   }
 
   useEffect(() => {

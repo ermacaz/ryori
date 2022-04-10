@@ -1,6 +1,7 @@
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import FoodImage from '../images/food.png'
 function RecipeIndexEntry({recipe, setRecipeShown}) {
 
   const showRecipe = (recipe) => {
@@ -14,7 +15,7 @@ function RecipeIndexEntry({recipe, setRecipeShown}) {
       )
     } else {
       return (
-        <img alt='primaryImage' style={{maxHeight: '250px', maxWidth: '350px', margin: 'auto', display: 'block'}} src='/food.png'/>
+        <img alt='primaryImage' style={{maxHeight: '250px', maxWidth: '350px', margin: 'auto', display: 'block'}} src={FoodImage}/>
       )
     }
   }

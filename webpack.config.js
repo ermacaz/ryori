@@ -5,12 +5,13 @@ const mode = process.env.NODE_ENV === 'development' ? 'development' : 'productio
 
 module.exports = {
   mode: mode,
+  devtool: 'source-map',
   entry: {
-    application: "./app/javascript/application.js"
+    application: ["./app/javascript/application.js"]
   },
   output: {
     filename: "[name].js",
-    sourceMapFilename: "[name].js.map",
+    sourceMapFilename: "[name].js-[contenthash].map",
     path: path.resolve(__dirname, "app/assets/builds"),
   },
   optimization: {
@@ -18,6 +19,13 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.(jpg|png)$/,
+        include: path.resolve(__dirname, "app/javascript/images"),
+        use: {
+          loader: 'url-loader',
+        },
+      },
       {
         test: /\.(jsx|js)$/,
         include: path.resolve(__dirname, "app/javascript"),
@@ -29,7 +37,7 @@ module.exports = {
               ['@babel/preset-env', {
                 "targets": "defaults"
               }],
-              '@babel/preset-react'
+              '@babel/preset-react',
             ]
           }
         }]

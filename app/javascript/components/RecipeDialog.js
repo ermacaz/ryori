@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { ROOT_URL } from "../constants/globals";
+import FoodImage from '../images/food.png'
 
 function RecipeDialog({recipe, setRecipeShown, setShowEditRecipeDialog}) {
   const handleClose = () => setRecipeShown(0);
@@ -41,7 +42,7 @@ function RecipeDialog({recipe, setRecipeShown, setShowEditRecipeDialog}) {
         </Row>
         <Row style={{marginTop: '1.5rem', marginBottom: '1.5rem'}}>
           <Col xs={{span: 12}}>
-            <img alt='primaryImage' style={{height: '250px', width: '400px', margin: 'auto', display: 'block'}} src={recipe.image_url}/>
+            <img alt='primaryImage' style={{ maxHeight: '300px', maxWidth: '350px', margin: 'auto', display: 'block'}} src={recipe.image_url ? recipe.image_url : FoodImage}/>
           </Col>
         </Row>
         <ul>

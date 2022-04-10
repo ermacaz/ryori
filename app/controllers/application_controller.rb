@@ -1,10 +1,13 @@
 class ApplicationController < ActionController::Base
   prepend_before_action :login_required, :except=>[:home]
   before_action :allow_cors
+  skip_before_action :verify_authenticity_token
+
 
   protected
   def login_required
-    if params[:api_key].present? && @curr_user = User.find_by_api_key(params[:api_key])
+    key = request.headers['Authorization']
+    if key && User.find_by_api_key(key)
       return true
     else
       render_json_response(:status=>401, :success=>false, :message=>'Invalid API key') and return

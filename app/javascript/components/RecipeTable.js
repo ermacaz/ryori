@@ -36,7 +36,7 @@ function RecipeTable({recipes, SetRecipes, setRecipeShown}) {
     )
   } else {
     return(
-      <div>No Reicpes</div>
+      <div>No Recipes</div>
     )
   }
   

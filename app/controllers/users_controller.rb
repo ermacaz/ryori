@@ -2,12 +2,13 @@ class UsersController < ApplicationController
 
   before_action :set_user, only: %i[ show update destroy ]
   skip_before_action :login_required, :only=>[:login]
+  before_action :allow_cors
 
   def login
     @user = User.find_by_email(params[:email])
     if @user&.authenticate(params[:password])
       api_key = SecureRandom.base64(64)
-      @user.update(:api_keygi =>api_key)
+      @user.update(:api_key =>api_key)
       data = {:api_key=>api_key}
       render_json_response(data:data)
     else

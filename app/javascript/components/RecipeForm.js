@@ -3,7 +3,6 @@ import { Form } from "react-bootstrap";
 import IngredientEntry from "./IngredientEntry";
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Card from 'react-bootstrap/Card'
 
 function RecipeForm({recipe, setRecipe, setPrimaryImage}) {
   return (
@@ -24,7 +23,7 @@ function RecipeForm({recipe, setRecipe, setPrimaryImage}) {
           <IngredientEntry recipe={recipe} setRecipe={setRecipe}/>
         </div>
         <div>
-        <Form.Group className="mb-3" controlId="formRecipeInstructions">
+        <Form.Group className="mb-3" controlId="formRecipeInst ructions">
           <Form.Label>Instructions</Form.Label>  
           <Form.Control as="textarea" rows={10} defaultValue={recipe.instructions} onChange={(e) => {
               var r = recipe;
