@@ -143,21 +143,22 @@ class IngredientEntry extends React.Component {
     if (ingredient._destroy === 1) {
       return(
         <Row key={'ingredient_row_'+ingredient.id}>
-          <Col xs={9}>
+          <Col xs={12}>
             <Badge bg="danger" key={'ingredient_badge_'+ingredient.id} style={{textDecoration: 'line-through'}}>{ingredient.name} - {ingredient.quantity_str} {ingredient.unit_of_measure}</Badge>
+            <div style={{display: 'inline', float: 'right'}}>
+            </div>
           </Col>
-          <Col xs={3}></Col>
         </Row>
       )
     } else {
-      return(
+      return (
         <Row key={'ingredient_row_'+ingredient.id}>
-          <Col xs={9}>
-            <Badge bg="secondary" key={'ingredient_badge_'+ingredient.id}>{ingredient.name} - {ingredient.quantity_str} {ingredient.unit_of_measure}</Badge>
-          </Col>
-          <Col xs={3}>
+        <Col xs={12}>
+          <Badge bg="secondary" key={'ingredient_badge_'+ingredient.id}>{ingredient.name} - {ingredient.quantity_str} {ingredient.unit_of_measure}</Badge>
+          <div style={{display: 'inline', float: 'right'}}>
             <span style={{marginLeft: '2em'}} key={'ingredient_remove_'+ingredient.id}><a href='#' onClick={() => this.handleRemoveIngredient(ingredient)}>delete</a></span>
-          </Col>
+          </div>
+        </Col>
         </Row>
       )
     }
@@ -165,8 +166,12 @@ class IngredientEntry extends React.Component {
  
   render = () => {
     let chunks = []
-    for (let i = 0; i < this.state.addedIngredients.length; i+=3) {
-      const chunk = this.state.addedIngredients.slice(i,i+3)
+    let cols = 3
+    // if ( this.state.addedIngredients.length < 12) {
+    //   cols = 2
+    // }
+    for (let i = 0; i < this.state.addedIngredients.length; i+=cols) {
+      const chunk = this.state.addedIngredients.slice(i,i+cols)
       chunks.push(chunk)
     }
 
@@ -178,7 +183,7 @@ class IngredientEntry extends React.Component {
               {chunks.map((ingredients,i) => {
                 return (
                   <Row key={'ingredient_chunk_row_'+i}>
-                    <Col xs={4}>
+                    <Col md={12/cols}>
                       {ingredients.map((ingredient) => {
                         return(
                           this.renderIngredient(ingredient)

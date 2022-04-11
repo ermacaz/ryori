@@ -11,7 +11,8 @@ function RecipeArea({setAuthorized}) {
   const [recipes, setRecipes] = React.useState([])
   const [recipeShown, setRecipeShown] = React.useState(0)
   const [showNewRecipeDialog, setShowNewRecipeDialog] = React.useState(false);
-  const [showEditRecipeDialog, setShowEditRecipeDialog] = React.useState({show: false, recipe: recipe});
+  const [showEditRecipeDialog, setShowEditRecipeDialog] = React.useState({show: false, recipe: null});
+  const [recipeDialogAlert, setRecipeDialogAlert] = React.useState({show: false, variant: 'success', message: ''})
   const [loading, setLoading] = React.useState(true);
   const authFetch = useAuthFetch();
   const handleAddRecipeClick = (event) => {
@@ -30,23 +31,6 @@ function RecipeArea({setAuthorized}) {
       }).finally(() => {
         setLoading(false)
       })
-      // fetch(ROOT_URL + '/recipes', {
-      //   headers: {
-      //     Authorization: apiKey.replace("apiKey=","")
-      //   }
-      // }).then(response => {
-      //     if (response.ok) {
-      //       return response.json()
-      //     }
-      //     throw response;
-      //   }).then(data => {
-      //   setRecipes(data);
-      // }).catch(error => {
-      //   console.log(error)
-      // })
-      //   .finally(() => {
-      //     setLoading(false);
-      //   })
     } else {
       document.cookies=''
       setAuthorized(false);
@@ -66,7 +50,7 @@ function RecipeArea({setAuthorized}) {
     )
   } else if (showEditRecipeDialog.show) {
     return(
-      <EditRecipeDialog recipe={showEditRecipeDialog.recipe} recipes={recipes} setShowEditRecipeDialog={setShowEditRecipeDialog} setRecipes={setRecipes} />
+      <EditRecipeDialog recipe={showEditRecipeDialog.recipe} recipes={recipes} setRecipeDialogAlert={setRecipeDialogAlert} setShowEditRecipeDialog={setShowEditRecipeDialog} setRecipes={setRecipes} />
     )
   } else {
     if (recipeShown) {
@@ -76,7 +60,7 @@ function RecipeArea({setAuthorized}) {
     }
     if (recipe) {
       return (
-        <RecipeDialog recipe={recipe} setShowEditRecipeDialog={setShowEditRecipeDialog} setRecipeShown={setRecipeShown}/>
+        <RecipeDialog recipe={recipe} setShowEditRecipeDialog={setShowEditRecipeDialog} recipeDialogAlert={recipeDialogAlert} setRecipeShown={setRecipeShown}/>
       )
     } else {
       return (

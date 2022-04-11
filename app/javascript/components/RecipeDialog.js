@@ -5,12 +5,17 @@ import ReactMarkdown from "react-markdown";
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Alert from "react-bootstrap/Alert";
 import { ROOT_URL } from "../constants/globals";
 import FoodImage from '../images/food.png'
 import useAuthFetch from "../helpers/useAuthFetch";
 
-function RecipeDialog({recipe, setRecipeShown, setShowEditRecipeDialog}) {
-  const handleClose = () => setRecipeShown(0);
+function RecipeDialog({recipe, setRecipeShown, setShowEditRecipeDialog, recipeDialogAlert}) {
+  const [alert, setAlert] = React.useState(recipeDialogAlert ? recipeDialogAlert : {})
+  const handleClose = () => {
+    setAlert({})
+    setRecipeShown(0);
+  }
   const authFetch = useAuthFetch();
   
   const handleDeleteRecipe = () => {
@@ -21,18 +26,24 @@ function RecipeDialog({recipe, setRecipeShown, setShowEditRecipeDialog}) {
       console.log(e)
     )
   }
-
   return (
-    <Modal show={true} size="xl"  onHide={handleClose}>
+    <Modal show={true} size="xl"  onHide={() => handleClose()}>
       <Modal.Header closeButton className={'dark-primary'}>
           <Modal.Title>
             {recipe.name}
             </Modal.Title>
       </Modal.Header>
       <Modal.Body className={'dark-primary'}>
+        {alert.show &&
+        <Row>
+          <Col xs={12}>
+            <Alert variant={alert.variant ? alert.variant : 'success'}  onClose={() => setAlert({show: false})} dismissible>{alert.message}</Alert>
+          </Col>
+        </Row>
+        }
         <Row>
           <Col xs={2}>
-            <Button variant={'outline-primary'} onClick={() => setShowEditRecipeDialog({show: true, recipe:recipe})} className={'outline-primary-color'}>Edit</Button>          
+            <Button variant={'outline-primary'} onClick={() => setShowEditRecipeDialog({show: true, recipe:recipe})} className={'outline-primary-color'}>Edit</Button>
           </Col >
           <Col xs={{span: 2, offset: 8}}>
             <Button style={{float: 'right'}} onClick={handleDeleteRecipe} variant={'outline-danger'} className={'outline-primary-color'}>Delete</Button>          
