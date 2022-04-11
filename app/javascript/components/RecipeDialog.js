@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import RecipeTable from "./RecipeTable";
 import Modal from 'react-bootstrap/Modal'
 import ReactMarkdown from "react-markdown";
@@ -9,18 +9,25 @@ import Alert from "react-bootstrap/Alert";
 import { ROOT_URL } from "../constants/globals";
 import FoodImage from '../images/food.png'
 import useAuthFetch from "../helpers/useAuthFetch";
+import Badge from "react-bootstrap/Badge";
 
-function RecipeDialog({recipe, setRecipeShown, setShowEditRecipeDialog, recipeDialogAlert}) {
-  const [alert, setAlert] = React.useState(recipeDialogAlert ? recipeDialogAlert : {})
-  const handleClose = () => {
-    setAlert({})
+function RecipeDialog({recipe, setRecipeShown, setRecipes,  setShowEditRecipeDialog, recipeDialogAlert, setRecipeDialogAlert}) {
+  function handleClose() {
     setRecipeShown(0);
+    setRecipeDialogAlert({})
   }
   const authFetch = useAuthFetch();
+  
+  useEffect(()=>{
+    return () =>{
+      console.log('effected')
+    }
+  })
   
   const handleDeleteRecipe = () => {
     authFetch.delete(`${ROOT_URL}/recipes/${recipe.id}`)
       .then((response) => {
+      setRecipes((recipes) => recipes.filter((x) => (x.id !== recipe.id)))
       setRecipeShown(false)
     }).catch((e) =>
       console.log(e)
@@ -34,10 +41,10 @@ function RecipeDialog({recipe, setRecipeShown, setShowEditRecipeDialog, recipeDi
             </Modal.Title>
       </Modal.Header>
       <Modal.Body className={'dark-primary'}>
-        {alert.show &&
+        {recipeDialogAlert && recipeDialogAlert.show &&
         <Row>
           <Col xs={12}>
-            <Alert variant={alert.variant ? alert.variant : 'success'}  onClose={() => setAlert({show: false})} dismissible>{alert.message}</Alert>
+            <Alert variant={recipeDialogAlert.variant ? recipeDialogAlert.variant : 'success'}  onClose={() => handleClose()} dismissible>{recipeDialogAlert.message}</Alert>
           </Col>
         </Row>
         }
@@ -56,7 +63,7 @@ function RecipeDialog({recipe, setRecipeShown, setShowEditRecipeDialog, recipeDi
         </Row>
         <ul>
           {recipe.ingredients.map((ingredient,i) => (
-            <li key={i}>{ingredient.name} - {ingredient.quantity_str} {ingredient.unit_of_measure}</li>
+            <li><Badge bg="secondary" key={'ingredient_badge_'+ingredient.id}>{ingredient.name} - {ingredient.quantity_str} {ingredient.unit_of_measure}</Badge></li>
           ))}
         </ul>
         <div><ReactMarkdown>{recipe.instructions}</ReactMarkdown></div>

@@ -60,7 +60,7 @@ function RecipeArea({setAuthorized}) {
     }
     if (recipe) {
       return (
-        <RecipeDialog recipe={recipe} setShowEditRecipeDialog={setShowEditRecipeDialog} recipeDialogAlert={recipeDialogAlert} setRecipeShown={setRecipeShown}/>
+        <RecipeDialog recipe={recipe} setRecipes={setRecipes} setShowEditRecipeDialog={setShowEditRecipeDialog} recipeDialogAlert={recipeDialogAlert} setRecipeDialogAlert={setRecipeDialogAlert} setRecipeShown={setRecipeShown}/>
       )
     } else {
       return (

@@ -32,6 +32,7 @@ function AddRecipeDialog({setShowNewRecipeDialog, setRecipes}) {
     }
     authFetch.post(`${ROOT_URL}/recipes`, formData)
     .then((json) => {
+      setRecipes((recipes) => ([json].concat(recipes)))
       handleClose({reloadRecipes:true})
     })
     .catch((error) => console.log(error))

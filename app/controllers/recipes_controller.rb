@@ -32,7 +32,7 @@ class RecipesController < ApplicationController
     # end
 
     if @recipe.save
-      render json: @recipe, status: :created, location: @recipe
+      render json: @recipe
     else
       render json: @recipe.errors, status: :unprocessable_entity
     end
