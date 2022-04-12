@@ -53,7 +53,10 @@ class IngredientEntry extends React.Component {
       .then(data => {
         this.setState({autocompleteIngredientItems: data})
       }).catch(error => {
-        console.log(error)  
+        console.log(error)
+        if (error === 'Invalid API key') {
+          setAuthorized(false)
+        }
       }).finally(() => {
       })
     }, 250);
@@ -68,6 +71,9 @@ class IngredientEntry extends React.Component {
           this.setState({autocompleteUnitItems: data})
         }).catch(error => {
           console.log(error)
+        if (error === 'Invalid API key') {
+          setAuthorized(false)
+        }
         }).finally(() => {
         })
     }, 250);
@@ -116,6 +122,9 @@ class IngredientEntry extends React.Component {
       this.clearForm()
     }).catch((error) => {
       console.log(error);
+      if (error === 'Invalid API key') {
+        setAuthorized(false)
+      }
     })
     
   }

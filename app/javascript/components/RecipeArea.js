@@ -27,7 +27,9 @@ function RecipeArea({setAuthorized}) {
         .then((json) => {
           setRecipes((json))
         }).catch((error) => {
-          console.log(error)
+          if (error === 'Invalid API key') {
+            setAuthorized(false)
+          }
       }).finally(() => {
         setLoading(false)
       })
@@ -46,11 +48,11 @@ function RecipeArea({setAuthorized}) {
     return (<p>Loading</p>)
   } else if (showNewRecipeDialog) {
     return(
-      <AddRecipeDialog setShowNewRecipeDialog={setShowNewRecipeDialog} setRecipes={setRecipes} />
+      <AddRecipeDialog setShowNewRecipeDialog={setShowNewRecipeDialog} setRecipes={setRecipes} setAuthorized={setAuthorized} />
     )
   } else if (showEditRecipeDialog.show) {
     return(
-      <EditRecipeDialog recipe={showEditRecipeDialog.recipe} recipes={recipes} setRecipeDialogAlert={setRecipeDialogAlert} setShowEditRecipeDialog={setShowEditRecipeDialog} setRecipes={setRecipes} />
+      <EditRecipeDialog recipe={showEditRecipeDialog.recipe} recipes={recipes} setAuthorized={setAuthorized} setRecipeDialogAlert={setRecipeDialogAlert} setShowEditRecipeDialog={setShowEditRecipeDialog} setRecipes={setRecipes} />
     )
   } else {
     if (recipeShown) {
@@ -60,7 +62,7 @@ function RecipeArea({setAuthorized}) {
     }
     if (recipe) {
       return (
-        <RecipeDialog recipe={recipe} setRecipes={setRecipes} setShowEditRecipeDialog={setShowEditRecipeDialog} recipeDialogAlert={recipeDialogAlert} setRecipeDialogAlert={setRecipeDialogAlert} setRecipeShown={setRecipeShown}/>
+        <RecipeDialog recipe={recipe} setRecipes={setRecipes} setAuthorized={setAuthorized} setShowEditRecipeDialog={setShowEditRecipeDialog} recipeDialogAlert={recipeDialogAlert} setRecipeDialogAlert={setRecipeDialogAlert} setRecipeShown={setRecipeShown}/>
       )
     } else {
       return (
@@ -68,7 +70,7 @@ function RecipeArea({setAuthorized}) {
           <a href='#' onClick={handleAddRecipeClick}>
             <AddRecipeButton onClick={handleAddRecipeClick}/>
           </a>
-          <RecipeTable recipes={recipes} setRecipes={setRecipes} setRecipeShown={setRecipeShown}/>
+          <RecipeTable recipes={recipes} setAuthorized={setAuthorized} setRecipes={setRecipes} setRecipeShown={setRecipeShown}/>
         </div>
       )
     }

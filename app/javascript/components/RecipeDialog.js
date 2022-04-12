@@ -11,7 +11,7 @@ import FoodImage from '../images/food.png'
 import useAuthFetch from "../helpers/useAuthFetch";
 import Badge from "react-bootstrap/Badge";
 
-function RecipeDialog({recipe, setRecipeShown, setRecipes,  setShowEditRecipeDialog, recipeDialogAlert, setRecipeDialogAlert}) {
+function RecipeDialog({recipe, setRecipeShown, setRecipes,  setShowEditRecipeDialog, recipeDialogAlert, setRecipeDialogAlert, setAuthorized}) {
   function handleClose() {
     setRecipeShown(0);
     setRecipeDialogAlert({})
@@ -29,9 +29,12 @@ function RecipeDialog({recipe, setRecipeShown, setRecipes,  setShowEditRecipeDia
       .then((response) => {
       setRecipes((recipes) => recipes.filter((x) => (x.id !== recipe.id)))
       setRecipeShown(false)
-    }).catch((e) =>
+    }).catch((e) =>{
+      if (error === 'Invalid API key') {
+        setAuthorized(false)
+      }
       console.log(e)
-    )
+    })
   }
   return (
     <Modal show={true} size="xl"  onHide={() => handleClose()}>

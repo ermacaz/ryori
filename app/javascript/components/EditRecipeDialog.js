@@ -42,7 +42,12 @@ function EditRecipeDialog({recipe, recipes, setShowEditRecipeDialog, setRecipes,
         setRecipeDialogAlert({show: true, variant: 'success', message: 'Recipe updated'})
         setShowEditRecipeDialog({show: false, recipe: null});
     })
-    .catch((error) => console.log(error))
+    .catch((error) => {
+      console.log(error)
+      if (error === 'Invalid API key') {
+        setAuthorized(false)
+      }
+    })
   }
 
   const handleClose = () => {

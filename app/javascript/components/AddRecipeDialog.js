@@ -35,7 +35,11 @@ function AddRecipeDialog({setShowNewRecipeDialog, setRecipes}) {
       setRecipes((recipes) => ([json].concat(recipes)))
       handleClose({reloadRecipes:true})
     })
-    .catch((error) => console.log(error))
+    .catch((error) => {
+      if (error === 'Invalid API key') {
+        setAuthorized(false)
+      }
+    })
   }
 
   const handleClose = (params) => {

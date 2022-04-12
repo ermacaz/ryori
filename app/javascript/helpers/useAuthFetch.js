@@ -26,7 +26,6 @@ const useAuthFetch = () => {
     let apiKey = document.cookie.split('; ').filter((x) => {return x.match(/^apiKey/)})[0]
     if (apiKey) {
       apiKey = apiKey.replace("apiKey=","")
-      apiKey = apiKey.replace("apiKey=","")
     } else {
       apiKey = ''
     }
