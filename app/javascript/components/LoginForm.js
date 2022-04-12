@@ -50,7 +50,7 @@ function LoginForm({setAuthorized}) {
   
   return (
     <Row>
-      <Col xs={{span: 4, offset: 4}}>
+      <Col md={{span: 4, offset: 4}}>
         <Card bg={'dark'} border={'secondary'} style={{marginTop: '3em'}} body>
           {alert.show &&
             <Alert variant='danger'>

@@ -56,7 +56,7 @@ function RecipeArea({setAuthorized}) {
     )
   } else {
     if (recipeShown) {
-      recipe = recipes.find((r) => r.id == recipeShown)
+      recipe = recipes.find((r) => r.id === recipeShown)
     } else {
       recipe = null;
     }

@@ -12,7 +12,7 @@ function RecipeForm({recipe, setRecipe, setPrimaryImage}) {
             <Form.Group className="mb-3" controlId="formRecipeName">
               <Form.Label>Name</Form.Label>  
               <Form.Control type="text" defaultValue={recipe.name} onChange={(e) => {
-                var r = recipe;
+                let r = recipe;
                 r.name = e.target.value
                 setRecipe(r)
               }}/>
@@ -26,7 +26,7 @@ function RecipeForm({recipe, setRecipe, setPrimaryImage}) {
         <Form.Group className="mb-3" controlId="formRecipeInst ructions">
           <Form.Label>Instructions</Form.Label>  
           <Form.Control as="textarea" rows={10} defaultValue={recipe.instructions} onChange={(e) => {
-              var r = recipe;
+              let r = recipe;
               r.instructions = e.target.value
               setRecipe(r)
             }}/>
@@ -36,7 +36,7 @@ function RecipeForm({recipe, setRecipe, setPrimaryImage}) {
         <Form.Group className="mb-3"   controlId="formRecipeNotes">
           <Form.Label>Notes</Form.Label>  
           <Form.Control as="textarea" rows={5}defaultValue={recipe.notes} onChange={(e) => {
-              var r = recipe;
+              let r = recipe;
               r.notes = e.target.value
               setRecipe(r)
             }}/>

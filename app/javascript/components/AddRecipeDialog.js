@@ -6,7 +6,7 @@ import Modal from 'react-bootstrap/Modal'
 import RecipeForm from "./RecipeForm";
 import useAuthFetch from "../helpers/useAuthFetch";
 
-function AddRecipeDialog({setShowNewRecipeDialog, setRecipes}) {
+function AddRecipeDialog({setShowNewRecipeDialog, setRecipes, setAuthorized}) {
   const [recipe, setRecipe] = React.useState({ingredients: []})
   const [primaryImage, setPrimaryImage] = React.useState(null)
   const authFetch = useAuthFetch();
@@ -17,7 +17,7 @@ function AddRecipeDialog({setShowNewRecipeDialog, setRecipes}) {
       name: recipe.name,
       instructions: recipe.instructions,
       notes: recipe.notes,
-      serving_size: recipe.serviceSize,
+      serving_size: recipe.serving_size,
       recipe_ingredients_attributes: Object.assign({}, recipe.ingredients.map((ingredient) => {
         return {
           ingredient_id: ingredient.ingredient_id,
@@ -42,7 +42,7 @@ function AddRecipeDialog({setShowNewRecipeDialog, setRecipes}) {
     })
   }
 
-  const handleClose = (params) => {
+  const handleClose = () => {
     setShowNewRecipeDialog(false);
   }
   

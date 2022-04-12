@@ -21,7 +21,7 @@ const useAuthFetch = () => {
     }
   }
   
-  function authHeader(url) {
+  function authHeader() {
     // return auth header with jwt if user is logged in and request is to the api url
     let apiKey = document.cookie.split('; ').filter((x) => {return x.match(/^apiKey/)})[0]
     if (apiKey) {

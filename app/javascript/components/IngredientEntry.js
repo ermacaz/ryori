@@ -31,13 +31,13 @@ class IngredientEntry extends React.Component {
     }
     this.recipe = this.props.recipe;
     this.setRecipe = this.props.setRecipe
+    this.setAuthorized = this.props.setAuthorized
     this.validateForm = this.validateForm.bind(this)
     this.renderAddButton = this.renderAddButton.bind(this)
     this.clearForm = this.clearForm.bind(this);
     this.handleRemoveIngredient = this.handleRemoveIngredient.bind(this);
     this.ingredientACTimer = null;
     this.unitACTimer = null;
-    this.quantityTimer = null;
     this.ingredientInput = null;
     this.quantityInput = null;
     this.unitOfMeasureInput = null;
@@ -55,7 +55,7 @@ class IngredientEntry extends React.Component {
       }).catch(error => {
         console.log(error)
         if (error === 'Invalid API key') {
-          setAuthorized(false)
+          this.setAuthorized(false)
         }
       }).finally(() => {
       })
@@ -72,7 +72,7 @@ class IngredientEntry extends React.Component {
         }).catch(error => {
           console.log(error)
         if (error === 'Invalid API key') {
-          setAuthorized(false)
+          this.setAuthorized(false)
         }
         }).finally(() => {
         })
@@ -123,14 +123,14 @@ class IngredientEntry extends React.Component {
     }).catch((error) => {
       console.log(error);
       if (error === 'Invalid API key') {
-        setAuthorized(false)
+        this.setAuthorized(false)
       }
     })
     
   }
 
   handleRemoveIngredient = (ingredient) => {
-    let ingredientSet = this.state.addedIngredients.filter((x) => x.ingredient_id != ingredient.ingredient_id);
+    let ingredientSet = this.state.addedIngredients.filter((x) => x.ingredient_id !== ingredient.ingredient_id);
     ingredient._destroy = 1
     ingredientSet.push(ingredient)
     this.setState({addedIngredients: ingredientSet})

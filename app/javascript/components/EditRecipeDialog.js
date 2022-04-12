@@ -6,7 +6,7 @@ import { Form } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import useAuthFetch from "../helpers/useAuthFetch";
 
-function EditRecipeDialog({recipe, recipes, setShowEditRecipeDialog, setRecipes, setRecipeDialogAlert}) {
+function EditRecipeDialog({recipe, recipes, setShowEditRecipeDialog, setRecipes, setRecipeDialogAlert, setAuthorized}) {
   const [localRecipe, setLocalRecipe] = React.useState(JSON.parse(JSON.stringify(recipe)))
   const [primaryImage, setPrimaryImage] = React.useState(null)
   const authFetch = useAuthFetch();
@@ -18,7 +18,7 @@ function EditRecipeDialog({recipe, recipes, setShowEditRecipeDialog, setRecipes,
       name: localRecipe.name,
       instructions: localRecipe.instructions,
       notes: localRecipe.notes,
-      serving_size: localRecipe.serviceSize,
+      serving_size: localRecipe.serving_size,
       recipe_ingredients_attributes: Object.assign({}, localRecipe.ingredients.map((ingredient) => {
         let recipe_ingredient =  {
           id: ingredient.id,

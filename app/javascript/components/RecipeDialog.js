@@ -65,7 +65,7 @@ function RecipeDialog({recipe, setRecipeShown, setRecipes,  setShowEditRecipeDia
           </Col>
         </Row>
         <ul>
-          {recipe.ingredients.map((ingredient,i) => (
+          {recipe.ingredients.map((ingredient) => (
             <li><Badge bg="secondary" key={'ingredient_badge_'+ingredient.id}>{ingredient.name} - {ingredient.quantity_str} {ingredient.unit_of_measure}</Badge></li>
           ))}
         </ul>
