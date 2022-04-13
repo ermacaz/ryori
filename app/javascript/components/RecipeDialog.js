@@ -65,7 +65,7 @@ function RecipeDialog({recipe, setRecipeShown, setRecipes,  setShowEditRecipeDia
         }
         <Row style={{marginTop: '1.5rem', marginBottom: '1.5rem'}}>
           <Col xs={{span: 12}}>
-            <img alt='primaryImage' style={{ maxHeight: '300px', maxWidth: '350px', margin: 'auto', display: 'block'}} src={recipe.image_url ? recipe.image_url : FoodImage}/>
+            <img alt='primaryImage' style={{ margin: 'auto', display: 'block'}} src={recipe.image_url ? recipe.image_url : FoodImage}/>
           </Col>
         </Row>
         <ul>

@@ -5,6 +5,11 @@ class Recipe < ApplicationRecord
   has_many :images, :as=>:entity, :dependent => :destroy
   accepts_nested_attributes_for :primary_image, :allow_destroy => true
   accepts_nested_attributes_for :recipe_ingredients, :allow_destroy => true
+
+  before_save :process_variants
+  def process_variants #ToDo move to delay
+    self.primary_image&.variant(:resize_to_limit=>[[300,350]])&.processed
+  end
   def as_json(options = nil)
     if Rails.env == 'production'
       ActiveStorage::Current.host = 'https://ryori.ermacaz.com'
@@ -13,7 +18,7 @@ class Recipe < ApplicationRecord
     end
     {:id=>self.id,
      :name=>self.name,
-     :image_url=>self.primary_image&.url,
+     :image_url=>self.primary_image&.variant(:resize_to_limit=>[300,350])&.processed&.url,
      :instructions=>self.instructions,
      :notes=>self.notes,
      :service_size=>self.serving_size,
