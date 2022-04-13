@@ -15,7 +15,7 @@ function RecipeIndexEntry({recipe, setRecipeShown}) {
       )
     } else {
       return (
-        <img alt='primaryImage' style={{maxHeight: '250px', maxWidth: '350px', margin: 'auto', display: 'block'}} src={FoodImage}/>
+        <img alt='primaryImage' style={{mina margin: 'auto', display: 'block'}} src={FoodImage}/>
       )
     }
   }
