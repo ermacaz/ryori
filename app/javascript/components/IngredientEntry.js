@@ -92,9 +92,11 @@ class IngredientEntry extends React.Component {
 
   clearForm = () => {
     if (this.unitOfMeasureInput) {
+      this.setState({unitValue: '', autocompleteUnitItems: []})
       this.unitOfMeasureInput.refs.input.value = '';
     }
     if (this.ingredientInput) {
+      this.setState({ingredientValue: '', autocompleteIngredientItems: []})
       this.ingredientInput.refs.input.value = '';
     }
     if (this.quantityInput) {
