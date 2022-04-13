@@ -11,11 +11,11 @@ function RecipeIndexEntry({recipe, setRecipeShown}) {
   const renderRecipeImage = () => {
     if (recipe.image_url) {
       return (
-        <img alt='primaryImage' style={{maxHeight: '250px', maxWidth: '350px', margin: 'auto', display: 'block'}} src={recipe.image_url}/>
+        <img alt='primaryImage' style={{paddingTop: '0.5em', maxHeight: '250px', maxWidth: '350px', margin: 'auto', display: 'block'}} src={recipe.image_url}/>
       )
     } else {
       return (
-        <img alt='primaryImage' style={{margin: 'auto', display: 'block'}} src={FoodImage}/>
+        <img alt='primaryImage' style={{margin: 'auto', display: 'block', paddingTop: '0.5em'}} src={FoodImage}/>
       )
     }
   }
