@@ -8,7 +8,7 @@ class Recipe < ApplicationRecord
 
   before_save :process_variants
   def process_variants #ToDo move to delay
-    self.primary_image&.variant(:resize_to_limit=>[[300,350]])&.processed
+    self.primary_image&.variant(:resize_to_limit=>[300,350])&.processed
   end
   def as_json(options = nil)
     if Rails.env == 'production'
