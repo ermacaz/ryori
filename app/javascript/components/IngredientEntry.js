@@ -92,10 +92,10 @@ class IngredientEntry extends React.Component {
 
   clearForm = () => {
     if (this.unitOfMeasureInput) {
-      this.unitOfMeasureInput.value = '';
+      this.unitOfMeasureInput.refs.input.value = '';
     }
     if (this.ingredientInput) {
-      this.ingredientInput.value = '';
+      this.ingredientInput.refs.input.value = '';
     }
     if (this.quantityInput) {
       this.quantityInput.value = '';

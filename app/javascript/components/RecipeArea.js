@@ -5,38 +5,37 @@ import AddRecipeButton from "./AddRecipeButton";
 import AddRecipeDialog from './AddRecipeDialog'
 import {ROOT_URL} from '../constants/globals'
 import EditRecipeDialog from "./EditRecipeDialog";
-import useAuthFetch from '../helpers/useAuthFetch'
 
-function RecipeArea({setAuthorized}) {
+function RecipeArea({authorized, setAuthorized}) {
   const [recipes, setRecipes] = React.useState([])
   const [recipeShown, setRecipeShown] = React.useState(0)
   const [showNewRecipeDialog, setShowNewRecipeDialog] = React.useState(false);
   const [showEditRecipeDialog, setShowEditRecipeDialog] = React.useState({show: false, recipe: null});
   const [recipeDialogAlert, setRecipeDialogAlert] = React.useState({show: false, variant: 'success', message: ''})
   const [loading, setLoading] = React.useState(true);
-  const authFetch = useAuthFetch();
   const handleAddRecipeClick = (event) => {
     event.preventDefault();
     setShowNewRecipeDialog(true)
   }
 
   const getRecipeData = () => {
-    const apiKey = document.cookie.split('; ').filter((x) => {return x.match(/^apiKey/)})[0]
-    if (apiKey) {
-      authFetch.get(`${ROOT_URL}/recipes`)
-        .then((json) => {
-          setRecipes((json))
-        }).catch((error) => {
-          if (error === 'Invalid API key') {
-            setAuthorized(false)
-          }
-      }).finally(() => {
-        setLoading(false)
-      })
-    } else {
-      document.cookies=''
-      setAuthorized(false);
-    }
+  const apiKey = document.cookie.split('; ').filter((x) => {return x.match(/^apiKey/)})[0]
+    fetch(`${ROOT_URL}/recipes`, {
+      method: 'GET'
+    }).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      console.log(response)
+    }).then((json) => {
+        setRecipes(json)
+    }).catch((error) => {
+      if (error === 'Invalid API key') {
+        setAuthorized(false)
+      }
+    }).finally(() => {
+      setLoading(false)
+    })
   }
 
   useEffect(() => {
@@ -62,15 +61,17 @@ function RecipeArea({setAuthorized}) {
     }
     if (recipe) {
       return (
-        <RecipeDialog recipe={recipe} setRecipes={setRecipes} setAuthorized={setAuthorized} setShowEditRecipeDialog={setShowEditRecipeDialog} recipeDialogAlert={recipeDialogAlert} setRecipeDialogAlert={setRecipeDialogAlert} setRecipeShown={setRecipeShown}/>
+        <RecipeDialog recipe={recipe} setRecipes={setRecipes} authorized={authorized} setAuthorized={setAuthorized} setShowEditRecipeDialog={setShowEditRecipeDialog} recipeDialogAlert={recipeDialogAlert} setRecipeDialogAlert={setRecipeDialogAlert} setRecipeShown={setRecipeShown}/>
       )
     } else {
       return (
         <div>
-          <a href='#' onClick={handleAddRecipeClick}>
-            <AddRecipeButton onClick={handleAddRecipeClick}/>
-          </a>
-          <RecipeTable recipes={recipes} setAuthorized={setAuthorized} setRecipes={setRecipes} setRecipeShown={setRecipeShown}/>
+          {authorized &&
+            <a href='#' onClick={handleAddRecipeClick}>
+              <AddRecipeButton onClick={handleAddRecipeClick}/>
+            </a>
+          }
+          <RecipeTable recipes={recipes} setRecipes={setRecipes} setRecipeShown={setRecipeShown}/>
         </div>
       )
     }

@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: %i[ show update destroy ]
-
+  skip_before_action :login_required, :only=>[:index,:show]
 
   def home
   end

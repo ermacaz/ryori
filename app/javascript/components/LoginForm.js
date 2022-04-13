@@ -6,8 +6,9 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
 import {ROOT_URL} from "../constants/globals";
+import Modal from "react-bootstrap/Modal";
 
-function LoginForm({setAuthorized}) {
+function LoginForm({setAuthorized, setShowLoginForm}) {
   const [email, setEmail] =  React.useState('');
   const [password, setPassword] =  React.useState('');
   const [alert, setAlert] = React.useState({show:false, message:'Unable to login'});
@@ -37,6 +38,7 @@ function LoginForm({setAuthorized}) {
         if (json.success) {
           document.cookie = ("apiKey=" + json.data.api_key + ';')
           setAuthorized(true)
+          setShowLoginForm(false);
         } else {
           setAlert({show: true, message: 'Invalid credentials'})
         }
@@ -48,31 +50,44 @@ function LoginForm({setAuthorized}) {
     }
   }
   
+  function handleClose() {
+    setShowLoginForm(false);
+  }
+  
   return (
-    <Row>
-      <Col md={{span: 4, offset: 4}}>
-        <Card bg={'dark'} border={'secondary'} style={{marginTop: '3em'}} body>
-          {alert.show &&
-            <Alert variant='danger'>
-              {alert.message}
-            </Alert>
-          }
-            <Form onSubmit={(e) => {e.preventDefault(); authenticate();}}>
-              <Form.Group className="mb-3" controlId="loginFormEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" onChange={(e) => {setEmail(e.target.value)}}/>
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="loginFormPassword">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" onChange={(e) => {setPassword(e.target.value)}}/>
-              </Form.Group>
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-            </Form>
-        </Card>
-      </Col>
-    </Row>
+    <Modal show={true}  onHide={() => handleClose()}>
+      <Modal.Header closeButton className={'dark-primary'}>
+        <Modal.Title>
+          Login
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body className={'dark-primary'}>
+        <Row>
+          <Col md={12}>
+            <Card bg={'dark'} border={'secondary'} body>
+              {alert.show &&
+                <Alert variant='danger'>
+                  {alert.message}
+                </Alert>
+              }
+                <Form onSubmit={(e) => {e.preventDefault(); authenticate();}}>
+                  <Form.Group className="mb-3" controlId="loginFormEmail">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type="email" onChange={(e) => {setEmail(e.target.value)}}/>
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="loginFormPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" onChange={(e) => {setPassword(e.target.value)}}/>
+                  </Form.Group>
+                  <Button variant="primary" type="submit">
+                    Submit
+                  </Button>
+                </Form>
+            </Card>
+          </Col>
+        </Row>
+      </Modal.Body>
+    </Modal>
   )
 }
 

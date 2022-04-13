@@ -4,22 +4,23 @@ import Col from 'react-bootstrap/Col';
 import React from 'react';
 import LoginForm from './LoginForm';
 import RecipeArea from './RecipeArea';
+import {UnlockFill} from "react-bootstrap-icons";
+import {LockFill} from "react-bootstrap-icons";
 
 function App() {
   const [authorized, setAuthorized] = React.useState(false);
-  
+  const [showLoginForm, setShowLoginForm] = React.useState(false)
   const bodyRender = () => {
     const apiKey = document.cookie.split('; ').filter((x) => {return x.match(/^apiKey/)})[0]
-    console.log("api key: " + apiKey)
     if (apiKey && apiKey.length > 7 && !authorized) {
       setAuthorized(true)
     }
-    if (!authorized) {
+    if (showLoginForm) {
       return (
         <Container fluid style={{
           minHeight: '1000px'
         }}>
-          <LoginForm setAuthorized={setAuthorized}/>
+          <LoginForm setShowLoginForm={setShowLoginForm} setAuthorized={setAuthorized}/>
         </Container>
       )
     } else {
@@ -28,11 +29,23 @@ function App() {
           minHeight: '1000px'
         }}>
           <Row>
-            <Col xs={12} >
+            <Col md={1}>
+              {authorized ?
+                <a href={'#'} onClick={() => {
+                  document.cookie = 'apiKey=;';
+                  setAuthorized(false)
+                }
+                }><UnlockFill className={'primary-color'}/></a>
+                :
+                <a href={'#'} onClick={() => setShowLoginForm(true)}><LockFill className={'primary-color'}/></a>
+              }
+              {}
+            </Col>
+            <Col md={{span: 10}} >
               Recipes
             </Col>
           </Row>
-          <RecipeArea setAuthorized={setAuthorized}/>
+          <RecipeArea authorized={authorized} setAuthorized={setAuthorized}/>
         </Container>
       )
     }

@@ -1,6 +1,6 @@
 class IngredientsController < ApplicationController
   before_action :set_ingredient, only: %i[ show update destroy ]
-
+  skip_before_action :login_required, :only=>[:index,:show]
   # GET /ingredients
   def index
     @ingredients = Ingredient.all

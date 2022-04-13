@@ -1,6 +1,6 @@
 class UnitOfMeasuresController < ApplicationController
   before_action :set_unit_of_measure, only: %i[ show update destroy ]
-
+  skip_before_action :login_required, :only=>[:index,:show]
   # GET /unit_of_measures
   def index
     @unit_of_measures = UnitOfMeasure.all
