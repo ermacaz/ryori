@@ -40,11 +40,11 @@ function RecipeDialog({recipe, setRecipeShown, setRecipes,  setShowEditRecipeDia
   const renderRecipeImage = () => {
     if (recipe.image_url) {
       return (
-        <img alt='primaryImage' style={{ margin: 'auto', display: 'block'}} src={FoodImage}/>
+        <img alt='primaryImage' style={{ margin: 'auto', display: 'block'}} src={recipe.image_url}/>
       )
     } else {
       return (
-        <img alt='primaryImage' style={{ margin: 'auto', maxHeight: '250px', maxWidth: '350px', display: 'block'}} src={recipe.image_url}/>
+        <img alt='primaryImage' style={{ margin: 'auto', maxHeight: '250px', maxWidth: '350px', display: 'block'}} src={FoodImage}/>
       )
     }
   }
