@@ -4,7 +4,7 @@ import IngredientEntry from "./IngredientEntry";
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-function RecipeForm({recipe, setRecipe, setPrimaryImage}) {
+function RecipeForm({recipe, setRecipe, setPrimaryImage, setAuthorized}) {
   return (
     <div>
         <Row>
@@ -20,7 +20,7 @@ function RecipeForm({recipe, setRecipe, setPrimaryImage}) {
           </Col>
         </Row>
         <div>
-          <IngredientEntry recipe={recipe} setRecipe={setRecipe}/>
+          <IngredientEntry recipe={recipe} setRecipe={setRecipe} setAuthorized={setAuthorized}/>
         </div>
         <div>
         <Form.Group className="mb-3" controlId="formRecipeInst ructions">

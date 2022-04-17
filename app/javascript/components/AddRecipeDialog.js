@@ -54,7 +54,7 @@ function AddRecipeDialog({setShowNewRecipeDialog, setRecipes, setAuthorized}) {
       <Modal.Body className={'dark-primary'}>
       <div>
           <Form>
-            <RecipeForm recipe={recipe} setRecipe={setRecipe} setPrimaryImage={setPrimaryImage}/>
+            <RecipeForm recipe={recipe} setRecipe={setRecipe} setAuthorized={setAuthorized} setPrimaryImage={setPrimaryImage}/>
           </Form>
           <Button variant="primary" onClick={createRecipe}>Create Recipe</Button>
       </div>

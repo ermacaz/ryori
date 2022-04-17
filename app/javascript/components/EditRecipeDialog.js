@@ -61,7 +61,7 @@ function EditRecipeDialog({recipe, recipes, setShowEditRecipeDialog, setRecipes,
       </Modal.Header>
       <Modal.Body className={'dark-primary'}>
         <Form>
-          <RecipeForm recipe={localRecipe} setRecipe={setLocalRecipe} setPrimaryImage={setPrimaryImage}/>
+          <RecipeForm recipe={localRecipe} setRecipe={setLocalRecipe} setAuthorized={setAuthorized} setPrimaryImage={setPrimaryImage}/>
           <Button variant="primary" onClick={updateRecipe}>Update Recipe</Button>
         </Form>
       </Modal.Body>
