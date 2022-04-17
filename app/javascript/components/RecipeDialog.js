@@ -36,6 +36,19 @@ function RecipeDialog({recipe, setRecipeShown, setRecipes,  setShowEditRecipeDia
       console.log(e)
     })
   }
+  
+  const renderRecipeImage = () => {
+    if (recipe.image_url) {
+      return (
+        <img alt='primaryImage' style={{ margin: 'auto', display: 'block'}} src={FoodImage}/>
+      )
+    } else {
+      return (
+        <img alt='primaryImage' style={{ margin: 'auto', maxHeight: '250px', maxWidth: '350px', display: 'block'}} src={recipe.image_url}/>
+      )
+    }
+  }
+  
   return (
     <Modal show={true} size="xl"  onHide={() => handleClose()}>
       <Modal.Header closeButton className={'dark-primary'}>
@@ -65,7 +78,7 @@ function RecipeDialog({recipe, setRecipeShown, setRecipes,  setShowEditRecipeDia
         }
         <Row style={{marginTop: '1.5rem', marginBottom: '1.5rem'}}>
           <Col xs={{span: 12}}>
-            <img alt='primaryImage' style={{ margin: 'auto', display: 'block'}} src={recipe.image_url ? recipe.image_url : FoodImage}/>
+            {renderRecipeImage()}
           </Col>
         </Row>
         <ul>
