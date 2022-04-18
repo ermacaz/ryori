@@ -9,6 +9,7 @@ import Alert from "react-bootstrap/Alert";
 import { ROOT_URL } from "../constants/globals";
 import FoodImage from '../images/food.png'
 import Badge from "react-bootstrap/Badge";
+import IngredientList from "./IngredientList";
 
 function RecipeDialog({recipe, setRecipeShown, setRecipes,  setShowEditRecipeDialog, recipeDialogAlert, setRecipeDialogAlert, authorized, setAuthorized}) {
   function handleClose() {
@@ -49,6 +50,7 @@ function RecipeDialog({recipe, setRecipeShown, setRecipes,  setShowEditRecipeDia
     }
   }
   
+  
   return (
     <Modal show={true} size="xl"  onHide={() => handleClose()}>
       <Modal.Header closeButton className={'dark-primary'}>
@@ -81,11 +83,7 @@ function RecipeDialog({recipe, setRecipeShown, setRecipes,  setShowEditRecipeDia
             {renderRecipeImage()}
           </Col>
         </Row>
-        <ul>
-          {recipe.ingredients.map((ingredient) => (
-            <li><Badge bg="secondary" key={'ingredient_badge_'+ingredient.id}>{ingredient.name} - {ingredient.quantity_str} {ingredient.unit_of_measure}</Badge></li>
-          ))}
-        </ul>
+        <IngredientList ingredients={recipe.ingredients}/>
         <div><ReactMarkdown>{recipe.instructions}</ReactMarkdown></div>
         <div><ReactMarkdown>{recipe.notes}</ReactMarkdown></div>
       </Modal.Body>
