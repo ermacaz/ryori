@@ -1,0 +1,2 @@
+TODO
+updating image doesnt take until reload
