@@ -18,7 +18,7 @@ class Recipe < ApplicationRecord
     end
     {:id=>self.id,
      :name=>self.name,
-     :image_url=>self.primary_image&.variant(:resize_to_limit=>[300,350])&.processed&.url,
+     :image_url=>(self.primary_image&.variant(:resize_to_limit=>[300,350])&.processed&.url rescue nil),
      :instructions=>self.instructions,
      :notes=>self.notes,
      :service_size=>self.serving_size,

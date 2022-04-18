@@ -11,7 +11,7 @@ class RecipesController < ApplicationController
     if params[:search]
       @recipes = @recipes.where("name LIKE ?", "%#{params[:search]}%")
     end
-    @recipes.order('name')
+    @recipes = @recipes.order('name')
     render json: @recipes
   end
 

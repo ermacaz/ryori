@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Badge from 'react-bootstrap/Badge'
 import useAuthFetch from "../helpers/useAuthFetch";
-
+import IngredientList from "./IngredientList";
 
 class IngredientEntry extends React.Component {
 
@@ -36,6 +36,7 @@ class IngredientEntry extends React.Component {
     this.renderAddButton = this.renderAddButton.bind(this)
     this.clearForm = this.clearForm.bind(this);
     this.handleRemoveIngredient = this.handleRemoveIngredient.bind(this);
+    this.handleRestoreIngredient = this.handleRestoreIngredient.bind(this);
     this.ingredientACTimer = null;
     this.unitACTimer = null;
     this.ingredientInput = null;
@@ -121,7 +122,8 @@ class IngredientEntry extends React.Component {
       let r = this.recipe;
       r.ingredients.push(ingredient)
       this.setRecipe(r)
-      this.clearForm()
+      this.clearForm();
+      this.ingredientInput.refs.input.focus();
     }).catch((error) => {
       console.log(error);
       if (error === 'Invalid API key') {
@@ -132,9 +134,16 @@ class IngredientEntry extends React.Component {
   }
 
   handleRemoveIngredient = (ingredient) => {
-    let ingredientSet = this.state.addedIngredients.filter((x) => x.ingredient_id !== ingredient.ingredient_id);
-    ingredient._destroy = 1
-    ingredientSet.push(ingredient)
+    let ingredientSet = [...this.state.addedIngredients]
+    let index = ingredientSet.findIndex((x) => x.ingredient_id === ingredient.ingredient_id)
+    ingredientSet[index]._destroy = 1
+    this.setState({addedIngredients: ingredientSet})
+  }
+  
+  handleRestoreIngredient = (ingredient) => {
+    let ingredientSet = [...this.state.addedIngredients]
+    let index = ingredientSet.findIndex((x) => x.ingredient_id === ingredient.ingredient_id)
+    ingredientSet[index]._destroy = null
     this.setState({addedIngredients: ingredientSet})
   }
 
@@ -149,62 +158,13 @@ class IngredientEntry extends React.Component {
       )
     }
   }
-
-  renderIngredient = (ingredient) => {
-    if (ingredient._destroy === 1) {
-      return(
-        <Row key={'ingredient_row_'+ingredient.id}>
-          <Col xs={12}>
-            <Badge bg="danger" key={'ingredient_badge_'+ingredient.id} style={{textDecoration: 'line-through'}}>{ingredient.name} - {ingredient.quantity_str} {ingredient.unit_of_measure}</Badge>
-            <div style={{display: 'inline', float: 'right'}}>
-            </div>
-          </Col>
-        </Row>
-      )
-    } else {
-      return (
-        <Row key={'ingredient_row_'+ingredient.id}>
-        <Col xs={12}>
-          <Badge bg="secondary" key={'ingredient_badge_'+ingredient.id}>{ingredient.name} - {ingredient.quantity_str} {ingredient.unit_of_measure}</Badge>
-          <div style={{display: 'inline', float: 'right'}}>
-            <span style={{marginLeft: '2em'}} key={'ingredient_remove_'+ingredient.id}><a href='#' onClick={() => this.handleRemoveIngredient(ingredient)}>delete</a></span>
-          </div>
-        </Col>
-        </Row>
-      )
-    }
-  }
- 
+  
   render = () => {
-    let chunks = []
-    let cols = 3
-    // if ( this.state.addedIngredients.length < 12) {
-    //   cols = 2
-    // }
-    for (let i = 0; i < this.state.addedIngredients.length; i+=cols) {
-      const chunk = this.state.addedIngredients.slice(i,i+cols)
-      chunks.push(chunk)
-    }
-
-    return(
+      return(
       <div>
         <div>
           <Card bg={'dark'} border={'secondary'} body>
-            <div>
-              {chunks.map((ingredients,i) => {
-                return (
-                  <Row key={'ingredient_chunk_row_'+i}>
-                    <Col md={12/cols}>
-                      {ingredients.map((ingredient) => {
-                        return(
-                          this.renderIngredient(ingredient)
-                        )
-                      })}
-                    </Col>
-                  </Row>
-                )  
-              })}
-            </div>
+            <IngredientList ingredients={this.state.addedIngredients} handleRestoreIngredient={this.handleRestoreIngredient} handleRemoveIngredient={this.handleRemoveIngredient}/>
             <Form.Group className="mb-3" controlId="recipeForm.ingredientName">
             <Row className={'align-items-end'}>
               <Col>
