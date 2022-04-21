@@ -63,9 +63,9 @@ task :deploy do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     command %{export PATH=/usr/local/rvm/bin:$PATH}
-    command %{export PATH=/usr/local/rvm/gems/ruby-3.1.1/bin:$PATH}
-    command %{export PATH=/usr/local/rvm/gems/ruby-3.1.1@global/bin:$PATH}
-    command %{export PATH=:/usr/local/rvm/rubies/ruby-3.1.1/bin:$PATH}
+    command %{export PATH=/usr/local/rvm/gems/ruby-3.1.2/bin:$PATH}
+    command %{export PATH=/usr/local/rvm/gems/ruby-3.1.2@global/bin:$PATH}
+    command %{export PATH=:/usr/local/rvm/rubies/ruby-3.1.2/bin:$PATH}
     command %{bundle config set --local path 'vendor/bundle'}
     invoke :"bundle:install"
     invoke :'rails:db_migrate'

@@ -32,10 +32,12 @@ class IngredientEntry extends React.Component {
     this.recipe = this.props.recipe;
     this.setRecipe = this.props.setRecipe
     this.setAuthorized = this.props.setAuthorized
+    this.setShowDialog = this.props.setShowDialog
     this.validateForm = this.validateForm.bind(this)
     this.renderAddButton = this.renderAddButton.bind(this)
     this.clearForm = this.clearForm.bind(this);
     this.handleRemoveIngredient = this.handleRemoveIngredient.bind(this);
+    this.deauth = this.deauth.bind(this);
     this.handleRestoreIngredient = this.handleRestoreIngredient.bind(this);
     this.ingredientACTimer = null;
     this.unitACTimer = null;
@@ -43,6 +45,11 @@ class IngredientEntry extends React.Component {
     this.quantityInput = null;
     this.unitOfMeasureInput = null;
     this.authFetch = useAuthFetch();
+  }
+  
+  deauth = () => {
+    this.setAuthorized(false)
+    this.setShowDialog(false)
   }
 
   getAutoCompleteIngredientEntries = (term) => {
@@ -56,7 +63,7 @@ class IngredientEntry extends React.Component {
       }).catch(error => {
         console.log(error)
         if (error === 'Invalid API key') {
-          this.setAuthorized(false)
+          this.deauth();
         }
       }).finally(() => {
       })
@@ -72,9 +79,9 @@ class IngredientEntry extends React.Component {
           this.setState({autocompleteUnitItems: data})
         }).catch(error => {
           console.log(error)
-        if (error === 'Invalid API key') {
-          this.setAuthorized(false)
-        }
+          if (error === 'Invalid API key') {
+            this.deauth();
+          }
         }).finally(() => {
         })
     }, 250);
@@ -127,7 +134,7 @@ class IngredientEntry extends React.Component {
     }).catch((error) => {
       console.log(error);
       if (error === 'Invalid API key') {
-        this.setAuthorized(false)
+        this.deauth();
       }
     })
     
