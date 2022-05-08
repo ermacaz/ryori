@@ -39,6 +39,7 @@ class IngredientEntry extends React.Component {
     this.handleRemoveIngredient = this.handleRemoveIngredient.bind(this);
     this.deauth = this.deauth.bind(this);
     this.handleRestoreIngredient = this.handleRestoreIngredient.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.ingredientACTimer = null;
     this.unitACTimer = null;
     this.ingredientInput = null;
@@ -166,6 +167,13 @@ class IngredientEntry extends React.Component {
     }
   }
   
+  handleKeyDown = (e) => {
+    if (e.key === "Enter" && this.state.ingredientValid) {
+      this.handleAddIngredient()
+    }
+  };
+  
+  
   render = () => {
       return(
       <div>
@@ -201,6 +209,9 @@ class IngredientEntry extends React.Component {
                     this.setState({quantityValue: e.target.value})
                     this.validateForm();
                   }}
+                  onKeyDown={(e) => {
+                    this.handleKeyDown(e);
+                  }}
                   ref = {el => this.quantityInput = el}
                   type='text'>
                   
@@ -209,7 +220,7 @@ class IngredientEntry extends React.Component {
               <Col>
                 <Form.Label style={{display: 'block'}}>Unit</Form.Label>
                 <Autocomplete
-                  inputProps={{id: 'unit-of-measure-autocomplete', className: 'form-control', placeholder: 'Tbsp'}}
+                  inputProps={{id: 'unit-of-measure-autocomplete', className: 'form-control', placeholder: 'Tbsp', onKeyDown: (e) => {this.handleKeyDown(e)}}}
                   ref = {el => this.unitOfMeasureInput = el}
                   items={this.state.autocompleteUnitItems}
                   getItemValue={(item) => item.name}
