@@ -244,6 +244,7 @@ DEPENDENCIES
   mina
   mini_magick
   mysql2
+  nokogiri (>= 1.13.6)
   puma (~> 5.0)
   rack-cors
   rails (= 7.0.2.4)
