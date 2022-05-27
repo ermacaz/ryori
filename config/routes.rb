@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       post :login
+      get :check_auth
     end
   end
   resources :unit_of_measures

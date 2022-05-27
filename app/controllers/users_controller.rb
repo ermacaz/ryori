@@ -3,6 +3,10 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[ show update destroy ]
   skip_before_action :login_required, :only=>[:login]
   before_action :allow_cors
+  
+  def check_auth
+    render_json_response
+  end
 
   def login
     @user = User.find_by_email(params[:email])

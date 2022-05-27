@@ -38,6 +38,7 @@ function AddRecipeDialog({setShowNewRecipeDialog, setRecipes, setAuthorized}) {
     .catch((error) => {
       if (error === 'Invalid API key') {
         setAuthorized(false)
+        handleClose();
       }
     })
   }

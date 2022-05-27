@@ -6,14 +6,34 @@ import LoginForm from './LoginForm';
 import RecipeArea from './RecipeArea';
 import {UnlockFill} from "react-bootstrap-icons";
 import {LockFill} from "react-bootstrap-icons";
+import {ROOT_URL} from "../constants/globals";
 
 function App() {
   const [authorized, setAuthorized] = React.useState(false);
   const [showLoginForm, setShowLoginForm] = React.useState(false)
+  
+  React.useEffect(() => {
+    if (!authorized) {
+      document.cookie = 'apiKey=;';
+    }
+  }, [authorized]);
+  
   const bodyRender = () => {
     const apiKey = document.cookie.split('; ').filter((x) => {return x.match(/^apiKey/)})[0]
     if (apiKey && apiKey.length > 7 && !authorized) {
-      setAuthorized(true)
+      fetch(`${ROOT_URL}/users/check_auth`, {
+        method: 'GET'
+      }).then((response) => {
+        if (response.ok) {
+          setAuthorized(true)
+          return
+        }
+        console.log(response)
+      }).catch((error) => {
+        if (error === 'Invalid API key') {
+          setAuthorized(false)
+        }
+      })
     }
     if (showLoginForm) {
       return (
@@ -32,7 +52,6 @@ function App() {
             <Col md={1}>
               {authorized ?
                 <a href={'#'} onClick={() => {
-                  document.cookie = 'apiKey=;';
                   setAuthorized(false)
                 }
                 }><UnlockFill className={'primary-color'}/></a>

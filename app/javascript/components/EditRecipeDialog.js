@@ -46,6 +46,7 @@ function EditRecipeDialog({recipe, recipes, setShowEditRecipeDialog, setRecipes,
       console.log(error)
       if (error === 'Invalid API key') {
         setAuthorized(false)
+        handleClose()
       }
     })
   }
