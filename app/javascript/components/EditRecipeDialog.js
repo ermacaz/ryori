@@ -57,7 +57,7 @@ function EditRecipeDialog({recipe, recipes, setShowEditRecipeDialog, setRecipes,
   
   return(
     <Modal show={true} size="xl"  onHide={handleClose}>
-      <Modal.Header closeButton className={'dark-primary'}>
+      <Modal.Header closeButton className={'dark-primary blueBorder'}>
         <Modal.Title >Edit Recipe</Modal.Title>
       </Modal.Header>
       <Modal.Body className={'dark-primary'}>

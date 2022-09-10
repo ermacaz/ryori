@@ -34,7 +34,7 @@ const IngredientList = function({ingredients, handleRestoreIngredient, handleRem
                   return (
                     <Row key={'ingredient_row_'+ingredient.id}>
                       <Col xs={12}>
-                        <Badge bg="secondary" key={'ingredient_badge_'+ingredient.id}>{ingredient.name} - {ingredient.quantity_str} {ingredient.unit_of_measure}</Badge>
+                        <Badge style={{backgroundColor: '#6272a4'}} bg={'none'} key={'ingredient_badge_'+ingredient.id}>{ingredient.name} - {ingredient.quantity_str} {ingredient.unit_of_measure}</Badge>
                         <div style={{display: 'inline', float: 'right'}}>
                           {handleRemoveIngredient ?
                             <span style={{marginLeft: '2em'}} key={'ingredient_remove_'+ingredient.id}><a href='#' onClick={() => handleRemoveIngredient(ingredient)}>delete</a></span>

@@ -54,13 +54,13 @@ function App() {
                 <a href={'#'} onClick={() => {
                   setAuthorized(false)
                 }
-                }><UnlockFill className={'primary-color'}/></a>
+                }><UnlockFill className={'red-color'}/></a>
                 :
-                <a href={'#'} onClick={() => setShowLoginForm(true)}><LockFill className={'primary-color'}/></a>
+                <a href={'#'} onClick={() => setShowLoginForm(true)}><LockFill className={'red-color'}/></a>
               }
               {}
             </Col>
-            <Col md={{span: 10}} >
+            <Col md={{span: 10}} className={'primary-color'} >
               Recipes
             </Col>
           </Row>

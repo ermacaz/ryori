@@ -3,7 +3,7 @@ import { PlusCircleFill } from "react-bootstrap-icons";
 
 function AddRecipeButton() {
   return (
-    <PlusCircleFill className={'primary-color'}/>
+    <PlusCircleFill className={'addButton'}/>
   )
 }
 

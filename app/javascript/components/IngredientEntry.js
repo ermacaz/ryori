@@ -178,7 +178,7 @@ class IngredientEntry extends React.Component {
       return(
       <div>
         <div>
-          <Card bg={'dark'} border={'secondary'} body>
+          <Card bg={'none'} border={'none'} style={{backgroundColor: '#282a36', borderColor: '#6272a4'}} body>
             <IngredientList ingredients={this.state.addedIngredients} handleRestoreIngredient={this.handleRestoreIngredient} handleRemoveIngredient={this.handleRemoveIngredient}/>
             <Form.Group className="mb-3" controlId="recipeForm.ingredientName">
             <Row className={'align-items-end'}>

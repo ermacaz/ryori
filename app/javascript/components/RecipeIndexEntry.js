@@ -29,7 +29,7 @@ function RecipeIndexEntry({recipe, setRecipeShown}) {
       </Row>
       <Row>
         <Col xs={12}>
-          <span style={{margin: 'auto', display: 'block', cursor: 'pointer'}} onClick={() => showRecipe(recipe)}>{recipe.name}</span>
+          <span className={'recipeIndexName'} style={{margin: 'auto', display: 'block', cursor: 'pointer'}} onClick={() => showRecipe(recipe)}>{recipe.name}</span>
         </Col>
       </Row>
     </div>

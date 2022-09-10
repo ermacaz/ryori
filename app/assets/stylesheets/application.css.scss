@@ -36,7 +36,7 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #f8f8f2;
 }
 
 .App-link {
@@ -53,36 +53,83 @@
   }
 }
 
-.primary-color {
-  color: #bb86fc
+
+
+.red-color {
+  color: #ff5555
+}
+
+.recipeIndexName {
+  color: #8be9fd;
 }
 
 .dark-primary {
-  background-color: #212529;
-  color: #ffffff
+  background-color: #282a36;
+  color: #8be9fd;
+}
+
+.addButton {
+  color: #50fa7b;
 }
 
 .modal-header .btn-close {
-  background-color: #bb86fc
+  background-color: #ffb86c;
+  opacity: 1;
 }
 
 .outline-primary-color {
-  color: #bb86fc;
-  border-color: #bb86fc;
+  color: #bd93f9;
+  border-color: #bd93f9;
 }
-$danger: #fc9588;
-$primary: #bb86fc;
+$danger: #ff5555;
+$primary: #bd93f9;
 
-$mynewcolor:#bb86fc;
+$mynewcolor:#bd93f9;
 @import "bootstrap/scss/bootstrap.scss";
 
 .btn-primary {
-  color: white;
+  color: #f8f8f2;
 }
 .btn-primary:hover {
-  color: white;
+  color: #f8f8f2;
 }
 
 .modal-content {
-  background-color: #212529;
+  background-color: #44475a;
+}
+
+.recipeBadge {
+  background-color: #6272a4;
+}
+
+.blueBorder {
+  border-color: #6272a4;
+}
+
+.form-label {
+  color: #ff79c6;
+}
+
+.form-control {
+  background-color: #44475a;
+  color: #f8f8f2;
+  border-color: #6272a4;
+}
+
+.form-control:focus {
+  border-color: #6272a4;
+  background-color: #44475a;
+  color: #f8f8f2;
+}
+
+.modal-header {
+  border-color: #6272a4;
+}
+
+.primary-color {
+  color: #bd93f9
+}
+
+.bg-dark {
+  background-color: #282a36;
 }

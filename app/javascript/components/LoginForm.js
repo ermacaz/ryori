@@ -64,7 +64,7 @@ function LoginForm({setAuthorized, setShowLoginForm}) {
       <Modal.Body className={'dark-primary'}>
         <Row>
           <Col md={12}>
-            <Card bg={'dark'} border={'secondary'} body>
+            <Card bg={'none'} border={'none'} style={{backgroundColor: '#282a36', borderColor: '#6272a4'}} body>
               {alert.show &&
                 <Alert variant='danger'>
                   {alert.message}

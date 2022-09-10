@@ -53,7 +53,7 @@ function RecipeDialog({recipe, setRecipeShown, setRecipes,  setShowEditRecipeDia
   
   return (
     <Modal show={true} size="xl"  onHide={() => handleClose()}>
-      <Modal.Header closeButton className={'dark-primary'}>
+      <Modal.Header closeButton className={'primary-color dark-primary'}>
           <Modal.Title>
             {recipe.name}
             </Modal.Title>
@@ -84,7 +84,7 @@ function RecipeDialog({recipe, setRecipeShown, setRecipes,  setShowEditRecipeDia
           </Col>
         </Row>
         <IngredientList ingredients={recipe.ingredients}/>
-        <div><ReactMarkdown>{recipe.instructions}</ReactMarkdown></div>
+        <div style={{marginTop: '1em'}}><ReactMarkdown>{recipe.instructions}</ReactMarkdown></div>
         <div><ReactMarkdown>{recipe.notes}</ReactMarkdown></div>
       </Modal.Body>
       
