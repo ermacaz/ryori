@@ -19,7 +19,7 @@ function RecipeArea({authorized, setAuthorized}) {
   }
 
   const getRecipeData = () => {
-  const apiKey = document.cookie.split('; ').filter((x) => {return x.match(/^apiKey/)})[0]
+    const apiKey = document.cookie.split('; ').filter((x) => {return x.match(/^apiKey/)})[0]
     fetch(`${ROOT_URL}/recipes`, {
       method: 'GET'
     }).then((response) => {
@@ -34,8 +34,16 @@ function RecipeArea({authorized, setAuthorized}) {
         setAuthorized(false)
       }
     }).finally(() => {
+      parseUrlForRecipe()
       setLoading(false)
     })
+  }
+  
+  const parseUrlForRecipe = () => {
+    if (location.hash && location.hash.split("/").length >= 3) {
+      const recipeId = parseInt(location.hash.split("/")[2]);
+      setRecipeShown(recipeId);
+    }
   }
 
   useEffect(() => {

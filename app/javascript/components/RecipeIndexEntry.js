@@ -5,6 +5,7 @@ import FoodImage from '../images/food.png'
 function RecipeIndexEntry({recipe, setRecipeShown}) {
 
   const showRecipe = (recipe) => {
+    window.history.replaceState(null, recipe.name, "#/recipes/"+recipe.id)
     setRecipeShown(recipe.id);
   }
 

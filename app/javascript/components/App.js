@@ -14,7 +14,12 @@ function App() {
   
   React.useEffect(() => {
     if (!authorized) {
-      document.cookie = 'apiKey=;';
+      const apiKey = document.cookie.split('; ').filter((x) => {return x.match(/^apiKey/)})[0]
+      if (apiKey && apiKey.length > 7) {
+        setAuthorized(true)
+      } else{
+        document.cookie = 'apiKey=;';
+      }
     }
   }, [authorized]);
   
@@ -52,6 +57,7 @@ function App() {
             <Col md={1}>
               {authorized ?
                 <a href={'#'} onClick={() => {
+                  document.cookie = 'apiKey=;';
                   setAuthorized(false)
                 }
                 }><UnlockFill className={'red-color'}/></a>

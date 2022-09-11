@@ -13,8 +13,14 @@ import IngredientList from "./IngredientList";
 
 function RecipeDialog({recipe, setRecipeShown, setRecipes,  setShowEditRecipeDialog, recipeDialogAlert, setRecipeDialogAlert, authorized, setAuthorized}) {
   function handleClose() {
+    window.history.replaceState(null, "Ryori", "/");
     setRecipeShown(0);
     setRecipeDialogAlert({})
+  }
+  
+  function handleEditClick() {
+    window.history.replaceState(null, recipe.name, "#/recipes/"+recipe.id +'/edit');
+    setShowEditRecipeDialog({show: true, recipe: recipe})
   }
   
   useEffect(()=>{
@@ -69,7 +75,7 @@ function RecipeDialog({recipe, setRecipeShown, setRecipes,  setShowEditRecipeDia
         {authorized &&
           <Row>
             <Col xs={2}>
-              <Button variant={'outline-primary'} onClick={() => setShowEditRecipeDialog({show: true, recipe: recipe})}
+              <Button variant={'outline-primary'} onClick={() => handleEditClick() }
                       className={'outline-primary-color'}>Edit</Button>
             </Col>
             <Col xs={{span: 2, offset: 8}}>

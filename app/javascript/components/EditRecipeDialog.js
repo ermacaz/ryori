@@ -52,6 +52,7 @@ function EditRecipeDialog({recipe, recipes, setShowEditRecipeDialog, setRecipes,
   }
 
   const handleClose = () => {
+    window.history.replaceState(null, "Ryori", "/");
     setShowEditRecipeDialog({show: false, recipe: null});
   }
   
