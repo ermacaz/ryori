@@ -110,6 +110,7 @@ class IngredientEntry extends React.Component {
     }
     if (this.quantityInput) {
       this.quantityInput.value = '';
+      this.setState({quantityValue: ''})
     }
   }
 
