@@ -44,7 +44,7 @@ gem "bootsnap", require: false
 
 # Use Sass to process CSS
 gem "sassc-rails"
-gem 'nokogiri', ">= 1.13.6"
+gem 'nokogiri', ">= 1.13.9"
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
 gem 'mini_magick'
