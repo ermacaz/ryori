@@ -8,7 +8,7 @@ function RecipeForm({recipe, setRecipe, setShowDialog, setPrimaryImage, setAutho
   return (
     <div>
         <Row>
-          <Col md={{span: 6, offset: 3}}>
+          <Col md={{span: 6}}>
             <Form.Group className="mb-3" controlId="formRecipeName">
               <Form.Label>Name</Form.Label>  
               <Form.Control type="text" defaultValue={recipe.name} onChange={(e) => {
@@ -22,6 +22,18 @@ function RecipeForm({recipe, setRecipe, setShowDialog, setPrimaryImage, setAutho
         <div>
           <IngredientEntry recipe={recipe} setShowDialog={setShowDialog} setRecipe={setRecipe} setAuthorized={setAuthorized}/>
         </div>
+        <Row>
+          <Col md={{span: 1}}>
+            <Form.Group className="mb-3" controlId="formRecipeName">
+              <Form.Label>Servings</Form.Label>
+              <Form.Control type="text" defaultValue={recipe.serving_size || 1} onChange={(e) => {
+                let r = recipe;
+                r.serving_size = e.target.value
+                setRecipe(r)
+              }}/>
+            </Form.Group>
+          </Col>
+        </Row>
         <div>
         <Form.Group className="mb-3" controlId="formRecipeInst ructions">
           <Form.Label>Instructions</Form.Label>  

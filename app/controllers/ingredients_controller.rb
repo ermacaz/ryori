@@ -4,9 +4,7 @@ class IngredientsController < ApplicationController
   # GET /ingredients
   def index
     @ingredients = Ingredient.all
-    if params[:search]
-      @ingredients = @ingredients.where("name LIKE ?", "%#{params[:search]}%")
-    end
+    @ingredients = @ingredients.where("name LIKE ?", "%#{params[:search]}%") if params[:search]
     @ingredients.order('name')
     render json: @ingredients
   end
@@ -49,6 +47,7 @@ class IngredientsController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_ingredient
       @ingredient = Ingredient.find(params[:id])

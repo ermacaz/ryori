@@ -1,5 +1,4 @@
 import React, {useEffect} from "react";
-import RecipeTable from "./RecipeTable";
 import Modal from 'react-bootstrap/Modal'
 import ReactMarkdown from "react-markdown";
 import Button from 'react-bootstrap/Button';

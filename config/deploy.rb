@@ -19,8 +19,8 @@ set :rvm_path, '/usr/local/rvm/bin/rvm'
 set :rvm_use_path, '/usr/local/rvm/bin/rvm'
 
 # Optional settings:
-set :user, 'deploy'          # Username in the server to SSH to.
-set :port, '5029'           # SSH port number.
+set :user, 'deploy' # Username in the server to SSH to.
+set :port, '5029' # SSH port number.
 #   set :forward_agent, true     # SSH forward_agent.
 
 # Shared dirs and files will be symlinked into the app-folder by the 'deploy:link_shared_paths' step.
@@ -53,7 +53,7 @@ end
 #   invoke :'puma:status'
 # end
 
-desc "Deploys the current version to the server."
+desc 'Deploys the current version to the server.'
 task :deploy do
   # uncomment this line to make sure you pushed your local branch to the remote origin
   # invoke :'git:ensure_pushed'
