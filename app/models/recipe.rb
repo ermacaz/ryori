@@ -13,8 +13,9 @@ class Recipe < ApplicationRecord
   def as_json(options = nil)
     if Rails.env == 'production'
       ActiveStorage::Current.host = 'https://ryori.ermacaz.com'
+      ActiveStorage::Current.url_options = { protocol: 'https', host: 'ryori.ermacaz.com'}
     else
-      ActiveStorage::Current.host = 'http://localhost:3000'
+      ActiveStorage::Current.url_options = { protocol: 'http', host: 'localhost', port: '3000' }
     end
     {:id=>self.id,
      :name=>self.name,
